@@ -1,28 +1,21 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect } from 'react'
 import '../App.css'
 import '@mantine/core/styles.css';
 import { 
-  AppShell, 
   Button, 
-  MantineProvider, 
-  Burger, 
-  Group, 
-  Skeleton, 
   Flex, 
   Space, 
   Image,
-  Drawer } from '@mantine/core';
-import { useDisclosure, useColorScheme } from '@mantine/hooks';
-import { Header } from '../components/Header';
+} from '@mantine/core';
+// import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { Sidebar } from '../components/Sidebar';
 
 
 export const GuessPage = () => {
 
   const [isAi, setIsAi] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [resultText, setResultText] = useState(null);
+  const [resultText, setResultText] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   const getResponse = async() => {
@@ -45,7 +38,7 @@ export const GuessPage = () => {
 
   const handleClick = () => {
     setLoading(true);
-    setResultText(null);
+    setResultText('');
     getResponse();
   }
 
