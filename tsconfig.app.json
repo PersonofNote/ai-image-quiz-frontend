@@ -22,5 +22,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  // TODO: Add "src" back in when we want to use typescript
+  "include": [""]
 }

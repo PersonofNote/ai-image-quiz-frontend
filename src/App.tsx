@@ -1,22 +1,9 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, createContext } from 'react';
 import './App.css';
 import '@mantine/core/styles.css';
 import { 
-  AppShell, 
-  Button, 
-  MantineProvider, 
-  Burger, 
-  Group, 
-  Skeleton, 
-  Flex, 
-  Space, 
-  Image,
-  Drawer } from '@mantine/core';
+  MantineProvider,  } from '@mantine/core';
 import { useDisclosure, useColorScheme } from '@mantine/hooks';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { Sidebar } from './components/Sidebar';
-
 import { GuessPage } from './views/GuessPage';
 
 
