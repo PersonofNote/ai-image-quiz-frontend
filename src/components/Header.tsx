@@ -9,13 +9,13 @@ import {
   Tabs,
   Text,
   UnstyledButton,
-  useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import classes from './Header.module.css';
 import {IconRobot} from '@tabler/icons-react';
 import { Flex } from '@mantine/core';
 
+// TODO:Remove this once we have a user login going
 const user = {
   name: 'Sample User',
   email: 'sample@email.dev',
