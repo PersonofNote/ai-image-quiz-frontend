@@ -7,24 +7,25 @@ import {
   Space, 
   Image,
 } from '@mantine/core';
-// import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
+import { MainLayout } from '../components/MainLayout';
 
 
 export const GuessPage = () => {
 
-  const [isAi, setIsAi] = useState(null);
+  const [isAi, setIsAi] = useState<boolean | null>(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [resultText, setResultText] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   const getResponse = async() => {
-    const response = await fetch('http://localhost:3000/local-image');
+    // TODO env-aware url
+    const response = await fetch('http://127.0.0.1:3000/fetch-random-image');
     const data = await response.json();
-    console.log(data);
-    setImageSrc(data.imageUrl);
-    setIsAi(data.isAI);
+    console.log(data)
+    setImageSrc(data.image_url);
+    setIsAi(data.metadata.is_ai === 'True' ? true : false);
     setLoading(false);
+
   };
 
   useEffect(() => {
@@ -32,24 +33,22 @@ export const GuessPage = () => {
   },[]);
 
   const handleGuess = (guess: boolean) => {
-    const message = `You guessed: ${guess ? 'AI' : 'Not AI'}`;
+    console.log(guess, isAi)
+    const message = `You guessed: ${guess ? 'AI' : 'Real'}`;
     guess === isAi ? setResultText(message + " This is CORRECT") : setResultText(message + " INCORRECT")
+    // TODO: POST request
   };
 
   const handleClick = () => {
     setLoading(true);
     setResultText('');
     getResponse();
-  }
+  };
 
   
   return (
-    <Flex w={"100%"} direction="column" style={{ minHeight: '100vh' }}>
-      {/* <Header /> Not needed yet */}
-        <main>
-        <div>
+    <MainLayout>
           <h1>Was this image AI generated?</h1>
-        </div>
           {loading ? (
             <Flex align="center" gap="10px" justify="center" h={400}>
               <div>Loading...</div>
@@ -59,8 +58,8 @@ export const GuessPage = () => {
             <Flex align="center" justify="center">
               <Image
             radius="md"
-            h={400}
-            w={400}
+            h={600}
+            w={600}
             src={imageSrc}
           /> 
           </Flex>
@@ -72,11 +71,9 @@ export const GuessPage = () => {
           <Space h="md" />
           <Flex align="center" gap="10px" justify="center">
             <Button size="lg" disabled={loading || !!resultText} onClick={() => handleGuess(true)}>AI</Button> 
-            <Button size="lg"disabled={loading || !!resultText} onClick={() => handleGuess(false)}>Not AI</Button></Flex>
+            <Button size="lg"disabled={loading || !!resultText} onClick={() => handleGuess(false)}>Real</Button></Flex>
           <Space h="md" />
           <Button disabled={loading} onClick={handleClick}>Show another</Button>
-        </main>
-        <Footer />
-      </Flex>
+    </MainLayout>
   )
 };
