@@ -1,10 +1,6 @@
 import '../App.css'
 import '@mantine/core/styles.css';
-import { 
-  Flex
-} from '@mantine/core';
 import { MainLayout } from '../components/MainLayout';
-import { Footer } from '../components/Footer';
 const placeholderText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae erat posuere, mollis sapien ac, ornare justo. Sed aliquet lacus quis auctor sagittis. Nulla eget luctus magna, eget mattis augue. Ut vitae venenatis turpis. Vivamus sollicitudin tincidunt ipsum eu ullamcorper. Nullam ex arcu, convallis vitae vehicula vel, sollicitudin gravida turpis. Aliquam vitae ultricies ex. Mauris faucibus at sem eget hendrerit. Donec accumsan quam quis est iaculis consequat ut nec lacus. Nam venenatis metus non risus consectetur suscipit. Pellentesque vel libero lacinia, mattis metus in, malesuada erat. Curabitur ut ligula justo.
 
 Fusce justo libero, porttitor non velit in, accumsan vestibulum neque. Cras sit amet pharetra urna. Aliquam laoreet varius tincidunt. Vestibulum eu elit facilisis, molestie augue ac, condimentum quam. Nulla placerat quam et sapien feugiat gravida. Donec finibus tortor risus, et egestas tellus tincidunt sit amet. Nullam quis turpis justo. In hac habitasse platea dictumst.

@@ -1,3 +1,4 @@
+
 import '../App.css'
 import '@mantine/core/styles.css';
 import {
@@ -8,7 +9,9 @@ import { Footer } from '../components/Footer';
 
 
 
-export const MainLayout = ({children}) => {
+import { ReactNode } from 'react';
+
+export const MainLayout = ({ children }: { children: ReactNode[] | ReactNode }) => {
   
   return (
     <Flex w={"100%"} direction="column" style={{ minHeight: '100vh' }}>
