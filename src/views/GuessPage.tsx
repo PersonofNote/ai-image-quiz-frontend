@@ -9,34 +9,40 @@ import {
 } from '@mantine/core';
 import { MainLayout } from '../components/MainLayout';
 
-
 export const GuessPage = () => {
 
   const [isAi, setIsAi] = useState<boolean | null>(null);
   const [imageSrc, setImageSrc] = useState(null);
+  const [imageKey, setImageKey ] = useState(null);
   const [resultText, setResultText] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   const getResponse = async() => {
     // TODO env-aware url
-    const response = await fetch('https://4gjkk5u5v3.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image');
+    const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image');
     const data = await response.json();
-    console.log(data)
+    console.log(data);
+    setImageKey(data.metadata.image_key);
     setImageSrc(data.image_url);
     setIsAi(data.metadata.is_ai === 'True' ? true : false);
     setLoading(false);
-
   };
 
   useEffect(() => {
     getResponse();
   },[]);
 
-  const handleGuess = (guess: boolean) => {
+  const handleGuess = async(guess: boolean) => {
     console.log(guess, isAi)
     const message = `You guessed: ${guess ? 'AI' : 'Real'}`;
     guess === isAi ? setResultText(message + " This is CORRECT") : setResultText(message + " INCORRECT")
-    // TODO: POST request
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({ guess: isAi, image_key: imageKey, username: null, correct: guess === isAi })
+    };
+      const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image', requestOptions);
+      const data = await response.json();
+      console.log(data)
   };
 
   const handleClick = () => {
@@ -44,7 +50,6 @@ export const GuessPage = () => {
     setResultText('');
     getResponse();
   };
-
   
   return (
     <MainLayout>
@@ -57,11 +62,11 @@ export const GuessPage = () => {
             imageSrc ? (
             <Flex align="center" justify="center">
               <Image
-            radius="md"
-            h={600}
-            w={600}
-            src={imageSrc}
-          /> 
+                radius="md"
+                h={600}
+                w={600}
+                src={imageSrc}
+              /> 
           </Flex>
           ) : <p>Error...</p>
           )}
