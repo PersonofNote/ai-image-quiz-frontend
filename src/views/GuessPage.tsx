@@ -72,7 +72,7 @@ export const GuessPage = () => {
       body: JSON.stringify({ guess: isAi, image_key: imageKey, username: null, correct: guess === isAi })
     };
       const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image', requestOptions);
-      const data = await response.json();
+      void await response.json();
   };
 
   const handleClick = () => {
