@@ -51,7 +51,12 @@ export const GuessPage = () => {
   const getResponse = async() => {
     // TODO env-aware url
     //const response = await fetch('http://localhost:3000/fetch-random-image')
-    const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image');
+    const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     const data = await response.json();
     setImageKey(data.metadata.image_key);
     setImageSrc(data.image_url);
