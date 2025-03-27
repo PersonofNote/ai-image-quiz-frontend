@@ -12,11 +12,11 @@ export const ViewTabs = () => {
             <Tabs.Tab value="guess" leftSection={<IconPhoto size={12} />}>
               Guess
             </Tabs.Tab>
-            <Tabs.Tab value="hints" disabled leftSection={<IconHelpSquare size={12} />}>
+            <Tabs.Tab value="hints" leftSection={<IconHelpSquare size={12} />}>
               Hints
             </Tabs.Tab>
             <Tabs.Tab value="graphs" disabled leftSection={<IconChartBar size={12} />}>
-              Charts
+              Charts (coming soon)
             </Tabs.Tab>
           </Group>
           {/* TODO: implement user signup }
