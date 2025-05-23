@@ -49,9 +49,8 @@ export const GuessPage = () => {
   const [loading, setLoading] = useState(true);
 
   const getResponse = async() => {
-    // TODO env-aware url
-    //const response = await fetch('http://localhost:3000/fetch-random-image')
-    const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image', {
+    const lambdaUrl = process.env.NODE_ENV === 'production' ? 'https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image' : 'http://127.0.0.1:3000/fetch-random-image';
+    const response = await fetch(lambdaUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
