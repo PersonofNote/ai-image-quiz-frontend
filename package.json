@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler pages deploy dist",
+    "deploy:dev": "npm run build && wrangler pages deploy dist --env development"
   },
   "dependencies": {
     "@mantine/core": "^7.13.5",

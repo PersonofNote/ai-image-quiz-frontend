@@ -49,18 +49,36 @@ export const GuessPage = () => {
   const [loading, setLoading] = useState(true);
 
   const getResponse = async() => {
-    const lambdaUrl = process.env.NODE_ENV === 'production' ? 'https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image' : 'http://127.0.0.1:3000/fetch-random-image';
-    const response = await fetch(lambdaUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+    const apiUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://spot-the-synth-api-production.apersonofnote.workers.dev' 
+      : 'http://127.0.0.1:8787';
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    });
-    const data = await response.json();
-    setImageKey(data.metadata.image_key);
-    setImageSrc(data.image_url);
-    setIsAi(data.metadata.is_ai === 'True' ? true : false);
-    setLoading(false);
+      
+      const data = await response.json();
+      
+      if (!data.metadata || !data.metadata.image_key) {
+        throw new Error('Invalid response structure from API');
+      }
+      
+      setImageKey(data.metadata.image_key);
+      setImageSrc(data.image_url);
+      setIsAi(data.metadata.is_ai === 'True' ? true : false);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      setLoading(false);
+      // You might want to show an error message to the user here
+    }
   };
 
   useEffect(() => {
@@ -71,11 +89,17 @@ export const GuessPage = () => {
     setUserGuess(guess);
     const message = `You guessed: ${guess ? 'AI' : 'Real'}`;
     guess === isAi ? setResultText({header: "Correct!", text: message, flavorText: "You got it!"}) : setResultText({header: "Incorrect", text: message, flavorText: "Not this time"})
+    const apiUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://spot-the-synth-api.apersonofnote.workers.dev' 
+      : 'http://127.0.0.1:8787';
     const requestOptions = {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ guess: isAi, image_key: imageKey, username: null, correct: guess === isAi })
     };
-      const response = await fetch('https://q2vbfktlbc.execute-api.us-east-1.amazonaws.com/prod/fetch-random-image', requestOptions);
+      const response = await fetch(apiUrl, requestOptions);
       void await response.json();
   };
 
